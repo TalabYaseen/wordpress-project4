@@ -172,3 +172,15 @@ require_once ASTRA_THEME_DIR . 'inc/core/markup/class-astra-markup.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-filters.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-hooks.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-functions.php';
+add_filter( 'woocommerce_currencies', 'add_cw_currency' );
+function add_cw_currency( $cw_currency ) {
+     $cw_currency['JORDANIAN DINAR'] = __( 'JORDANIAN_DINAR', 'woocommerce' );
+     return $cw_currency;
+}
+add_filter('woocommerce_currency_symbol', 'add_cw_currency_symbol', 10, 2);
+function add_cw_currency_symbol( $custom_currency_symbol, $custom_currency ) {
+     switch( $custom_currency ) {
+         case 'JORDANIAN DINAR': $custom_currency_symbol = 'JOD'; break;
+     }
+     return $custom_currency_symbol;
+}
